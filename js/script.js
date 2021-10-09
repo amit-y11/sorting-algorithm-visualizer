@@ -22,13 +22,12 @@ function getRandomLength(){
 }
 
 
-function algoChanged(){
-    if(algo_type.value >= '1'){
-        start_btn.removeAttribute('disabled');
-    }
-    else{
-        start_btn.setAttribute('disabled',true);
-    }
+function toggleStartButton(){
+	if (algo_type.value < "1" || isSorting) {
+		start_btn.setAttribute("disabled", true);
+	} else {
+		start_btn.removeAttribute("disabled");
+	}
 }
 
 
@@ -69,6 +68,7 @@ function reset(){
         arr_color.push("bg-primary");
     } 
     draw();
+    toggleStartButton();
 }
 
 
@@ -84,9 +84,10 @@ function sleep(ms) {
 
 
 async function visualizeAlgo(){
-
-    isSorting = true;
     let n = arr.length;
+    isSorting = true;
+
+    toggleStartButton();
 
     for(let i=0; i <= n - 2; i++){
 
@@ -117,7 +118,10 @@ async function visualizeAlgo(){
 
     arr_color[n-1] = "bg-success";
     arr_color[n-2] = "bg-success";
+    isSorting = false;
+
     draw();
+    toggleStartButton();
 }
 
 function themeChanged() {
@@ -134,6 +138,6 @@ function themeChanged() {
 // Event Listeners
 start_btn.addEventListener("click",visualizeAlgo);
 reset_btn.addEventListener("click",reset);
-algo_type.addEventListener("change",algoChanged);
+algo_type.addEventListener("change",toggleStartButton);
 speed.addEventListener("change",speedChanged);
 darkMode.addEventListener('change', themeChanged);
