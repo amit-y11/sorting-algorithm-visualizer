@@ -18,7 +18,7 @@ sorting-algorithm-visualizer is a visualizer tool made using HTML, CSS and JavaS
 ### Contribution
 
 Whether you have ideas, design changes, code cleaning, or real heavy code changes, help is always welcome. The more is done the better it gets! So feel free to create an issue and make a pull request 😊
-read [this](CONTRIBUTION.md) to know how to contribute to this repo.
+read [this](CONTRIBUTING.md) to know how to contribute to this repo.
 
 ### License
 MIT License
