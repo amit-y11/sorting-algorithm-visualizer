@@ -3,6 +3,7 @@ const start_btn = document.querySelector("#start-btn");
 const reset_btn = document.querySelector('#reset-btn');
 const algo_type = document.querySelector('#algo-type');
 const speed = document.querySelector('#speed');
+const darkMode = document.querySelector('#darkMode');
 const arr = [];
 const arr_color = [];
 let speed_val = 15; // slow -> 50 ms normal -> 15 ms fast -> 5 ms
@@ -119,9 +120,20 @@ async function visualizeAlgo(){
     draw();
 }
 
+function themeChanged() {
+    if (darkMode.checked == false) {
+        document.body.style.backgroundColor = "rgb(206, 203, 203)";
+        document.body.style.color = "black";
+
+    } else if (darkMode.checked == true) {
+        document.body.style.backgroundColor = "rgb(19, 19, 19)";
+        document.body.style.color = "white";
+    }
+}
 
 // Event Listeners
 start_btn.addEventListener("click",visualizeAlgo);
 reset_btn.addEventListener("click",reset);
 algo_type.addEventListener("change",algoChanged);
 speed.addEventListener("change",speedChanged);
+darkMode.addEventListener('change', themeChanged);
