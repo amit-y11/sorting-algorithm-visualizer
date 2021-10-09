@@ -124,16 +124,36 @@ async function visualizeAlgo(){
     toggleStartButton();
 }
 
+
 function themeChanged() {
     if (darkMode.checked == false) {
         document.body.style.backgroundColor = "rgb(206, 203, 203)";
         document.body.style.color = "black";
+        localStorage.setItem('themeState','light');
 
     } else if (darkMode.checked == true) {
         document.body.style.backgroundColor = "rgb(19, 19, 19)";
         document.body.style.color = "white";
+        localStorage.setItem('themeState','dark');
     }
 }
+
+
+function setTheme(){
+    let themeState = localStorage.getItem('themeState');
+    if (themeState == 'dark'){
+        darkMode.checked = true;
+        document.body.style.backgroundColor = "rgb(19, 19, 19)";
+        document.body.style.color = "white";
+    }
+    else{
+        document.body.style.backgroundColor = "rgb(206, 203, 203)";
+        document.body.style.color = "black";
+    }
+}
+
+setTheme();
+
 
 // Event Listeners
 start_btn.addEventListener("click",visualizeAlgo);
