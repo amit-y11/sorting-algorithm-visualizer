@@ -82,8 +82,17 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+function visualizeAlgo(){
+    // set speed as selected in the options
+    speedChanged();
 
-async function visualizeAlgo(){
+    if (algo_type.value === '1')
+        visualizeSelectionSort();
+    else if(algo_type.value === '2')
+        visualizeInsertionSort();
+}
+
+async function visualizeSelectionSort(){
     let n = arr.length;
     isSorting = true;
 
@@ -121,6 +130,49 @@ async function visualizeAlgo(){
     isSorting = false;
 
     draw();
+    toggleStartButton();
+}
+
+
+async function visualizeInsertionSort(){
+    let n = arr.length;
+    isSorting = true;
+
+    toggleStartButton();
+
+    for(let i=1; i < n; i++){
+
+        scan(i);
+        await sleep(speed_val);
+        let k = arr[i];
+        let j = i -1;
+
+        while(j>=0 && arr[j]>k){
+
+            if(isSorting){
+
+                scan(j+1);
+                await sleep(speed_val);
+                arr[j+1]=arr[j];
+                arr[j] = k;
+                j=j-1;
+                draw();
+            }
+            else{
+                return;
+            }
+        }
+        arr[j+1]=k;
+    }
+    isSorting = false;
+
+    for(let i=0; i < n; i++){
+        scan(i);
+        arr_color[i]= "bg-success";
+        await sleep(5);
+        draw();
+    }
+
     toggleStartButton();
 }
 
