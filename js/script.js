@@ -134,6 +134,96 @@ async function visualizeSelectionSort(){
 }
 
 
+async function visualizeMergeSort(){
+    let n = arr.length;
+    isSorting = true;
+
+    toggleStartButton();
+
+
+    for(let curr_size=1; curr_size<n; curr_size=2*curr_size){
+        scan(curr_size);
+        await sleep(speed_val);
+        for(let left_start=0; left_start<n-1; left_start+=2*left_start){
+            if(isSorting){
+                scan(left_start+1);
+                await sleep(speed_val);
+                let mid = min(left_start + curr_size - 1, n-1);
+                let right_end = min(left_start + 2*curr_size - 1, n-1);
+                merge(arr, left_start, mid, right_end);
+                draw();
+            }
+            else{
+                return;
+            }
+        }
+    }
+    isSorting = false;
+
+    for(let i=0; i < n; i++){
+        scan(i);
+        arr_color[i]= "bg-success";
+        await sleep(5);
+        draw();
+    }
+
+    toggleStartButton();
+}
+
+async function merge(arr, left_start, mid, right_end){
+    let i, j, k;
+    let n1 = mid - left_start + 1;
+    let n2 =  right_end - mid;
+ 
+    const L = [];
+    const R = [];
+    for (i = 0; i < n1; i++)
+        L.push(arr[left_start + i]);
+    for (j = 0; j < n2; j++)
+        R.push(arr[mid + 1+ j]);
+    
+    i = 0;
+    j = 0;
+    k = left_start;
+
+    while (i < n1 && j < n2)
+    {
+        scan(i);
+        scan(j);
+        await sleep(speed_val);
+        if (L[i] <= R[j])
+        {
+            arr[k] = L[i];
+            i++;
+        }
+        else
+        {
+            arr[k] = R[j];
+            j++;
+        }
+        k++;
+    }
+ 
+    while (i < n1)
+    {
+        scan(i);
+        await sleep(speed_val);
+        arr[k] = L[i];
+        i++;
+        k++;
+    }
+ 
+    while (j < n2)
+    {
+        scan(j);
+        await sleep(speed_val);
+        arr[k] = R[j];
+        j++;
+        k++;
+    }
+    return;
+}
+
 async function visualizeInsertionSort(){
     let n = arr.length;
     isSorting = true;
