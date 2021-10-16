@@ -90,6 +90,9 @@ function visualizeAlgo(){
         visualizeSelectionSort();
     else if(algo_type.value === '2')
         visualizeInsertionSort();
+    else if(algo_type.value === '3') {
+        visualizeBubbleSort();
+    }
 }
 
 async function visualizeSelectionSort(){
@@ -176,6 +179,37 @@ async function visualizeInsertionSort(){
     toggleStartButton();
 }
 
+
+async function visualizeBubbleSort() {
+    const n = arr.length;
+    isSorting = true;
+
+    toggleStartButton();
+    for(let i = 0; i<n-1; i++) {
+        for(let j=0; j<n-i-1; j++) {
+            if(isSorting) {
+                scan(j);
+                await sleep(speed_val);
+                if(arr[j] > arr[j+1]) {
+                    scan(j+1);
+                    await sleep(speed_val);
+                    [arr[j] , arr[j+1]] = [arr[j+1], arr[j]];
+                }
+                draw();
+            }
+            else {
+                return;
+            }
+        }
+        arr_color[n-i-1]= "bg-success";
+    }
+
+    arr_color[0] = "bg-success";
+    isSorting = false;
+
+    draw();
+    toggleStartButton();
+}
 
 function themeChanged() {
     if (darkMode.checked == false) {
